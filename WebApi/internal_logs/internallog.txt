@@ -84,3 +84,6 @@
 2025-08-15 15:49:32.6135 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.3.4402. Product version: 6.0.3+e276e1969a52b8ecc5cc84c1670a516efea0cb19. GlobalAssemblyCache: False
 2025-08-15 15:49:32.6135 Info AutoReload Config File Monitor starting
 2025-08-15 15:49:32.6290 Info Configuration initialized.
+2025-08-18 09:50:53.3194 Info AppDomain Shutting down. LogFactory closing...
+2025-08-18 09:50:53.3984 Info AutoReload Config File Monitor stopping, since no active configuration
+2025-08-18 09:50:53.4331 Info LogFactory has been disposed.
