@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using NLog;
 using Services.Contracts;
 using WebApi.Extensions;
@@ -10,9 +11,23 @@ LogManager.Setup()
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
-builder.Services.AddControllers()
-    .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly)
-    .AddNewtonsoftJson();
+
+// bu konfigurasonu yaptýðýmýzda apimiz sadece json üzerinden deðil farklý media type'lar üzerinden de içerik alýp gönderebilir.
+builder.Services.AddControllers(config =>
+{
+    config.RespectBrowserAcceptHeader = true;
+    config.ReturnHttpNotAcceptable = true;
+})
+.AddCustomCsvFormatter()
+.AddXmlDataContractSerializerFormatters() // xml media type'ý için ekleme yaptýk
+.AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly)
+.AddNewtonsoftJson();
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;  // model statesi valid olmadýðýnda hata kodlarýnýn daha detaylý olmasýný saðlar. sadece 400 dönmez 402 gibi detay verir
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
