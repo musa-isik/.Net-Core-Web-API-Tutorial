@@ -5,7 +5,7 @@ using Repositories.Contracts;
 
 namespace Repositories.EFCore
 {
-    public class BookRepository : RepositoryBase<Book>, IBookRepository
+    public sealed class BookRepository : RepositoryBase<Book>, IBookRepository
     {
         public BookRepository(RepositoryContext context) : base(context)
         {
@@ -21,9 +21,10 @@ namespace Repositories.EFCore
             Delete(book);
         }
 
-        public async Task<PagedList<Book>> GetAllBooksAsync(BookParameters bookParameters,bool trackChanges)
+        public async Task<PagedList<Book>> GetAllBooksAsync(BookParameters bookParameters, bool trackChanges)
         {
-            var books =  await FindAll(trackChanges)
+            var books = await FindAll(trackChanges)
+                .FilterBooks(bookParameters.MinPrice,bookParameters.MaxPrice)
                 .OrderBy(book => book.Id)
                 .ToListAsync();
             return PagedList<Book>.ToPagedList(books, bookParameters.PageNumber, bookParameters.PageSize);
