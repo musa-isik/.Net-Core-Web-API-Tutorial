@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using NLog;
+using Presentation.ActionFilters;
 using Services.Contracts;
 using WebApi.Extensions;
 var builder = WebApplication.CreateBuilder(args);
@@ -8,9 +9,16 @@ LogManager.Setup()
     .LoadConfigurationFromFile(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
 // Add services to the container.
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.ConfigureLoggerService();
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
+builder.Services.ConfigureLoggerService();
+builder.Services.ConfigureActionFilters(); // action filterlarý ekledik
 
 // bu konfigurasonu yaptýðýmýzda apimiz sadece json üzerinden deðil farklý media type'lar üzerinden de içerik alýp gönderebilir.
 builder.Services.AddControllers(config =>
@@ -23,16 +31,14 @@ builder.Services.AddControllers(config =>
 .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly)
 .AddNewtonsoftJson();
 
+
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;  // model statesi valid olmadýðýnda hata kodlarýnýn daha detaylý olmasýný saðlar. sadece 400 dönmez 402 gibi detay verir
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.ConfigureLoggerService();
-builder.Services.AddAutoMapper(typeof(Program));
+
 
 var app = builder.Build();
 

@@ -1,15 +1,15 @@
 ﻿using Entities.Dtos;
-using Entities.Exceptions;
-using Entities.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.ActionFilters;
 using Services.Contracts;
-using System.Threading.Tasks;
 
 namespace Presentation.Controllers
 {
     [ApiController]
     [Route("api/books")]
+    [ServiceFilter(typeof(LogFilterAttribute))]
+
     public class BooksController : ControllerBase
     {
         private readonly IServiceManager _manager;
@@ -20,14 +20,14 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetBooks()
+        public async Task<IActionResult> GetBooksAsync()
         {
             var books = await _manager.BookService.GetAllBooksAsync(trackChanges: false);
             return Ok(books);
         }
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetOneBook([FromRoute(Name = "id")] int id)
+        public async Task<IActionResult> GetOneBookAsync([FromRoute(Name = "id")] int id)
         {
             var book = await _manager
                 .BookService
@@ -35,40 +35,44 @@ namespace Presentation.Controllers
             return Ok(book);
         }
 
-
+        [ServiceFilter(typeof(ValidationFilterAttribute))] // bu validation filter sayesinde metod içerisinde if kodu ile kontrol yapmamıza gerek kalmadı
         [HttpPost]
-        public async Task<IActionResult> CreateOneBook([FromBody] BookDtoForInsertion bookDto)
+        public async Task<IActionResult> CreateOneBookAsync([FromBody] BookDtoForInsertion bookDto)
         {
+            //if (bookDto is null)
+            //    return BadRequest();
 
-            if(!ModelState.IsValid)
-                return UnprocessableEntity(ModelState);
-
+            //if(!ModelState.IsValid)
+            //    return UnprocessableEntity(ModelState);
+            
             var book = await _manager.BookService.CreateOneBookAsync(bookDto);
             return StatusCode(201, book); // CreatedAtRoute();
         }
 
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateBook([FromRoute(Name = "id")] int id, [FromBody] BookDtoForUpdate bookDto)
+        public async Task<IActionResult> UpdateBookAsync([FromRoute(Name = "id")] int id, [FromBody] BookDtoForUpdate bookDto)
         {
-            if (bookDto is null)
-                return BadRequest(); //400
+            //[ServiceFilter(typeof(ValidationFilterAttribute))] kullanarak validasyonu tek bir yerde yaptık ve kod tekrarını önledik.
+            //if (bookDto is null)
+            //    return BadRequest(); //400
 
-            if(!ModelState.IsValid)
-                return UnprocessableEntity(ModelState);//422
+            //if(!ModelState.IsValid)
+            //    return UnprocessableEntity(ModelState);//422
 
             await _manager.BookService.UpdateOneBookAsync(id, bookDto, false);
             return NoContent(); //204
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteOneBook([FromRoute(Name = "id")] int id)
+        public async Task<IActionResult> DeleteOneBookAsync([FromRoute(Name = "id")] int id)
         {
             await _manager.BookService.DeleteOneBookAsync(id, false);
             return NoContent();
         }
 
         [HttpPatch("{id:int}")]
-        public async Task<IActionResult> PartiallyUpdateBook([FromRoute(Name = "id")] int id, [FromBody] JsonPatchDocument<BookDtoForUpdate> bookPatch)
+        public async Task<IActionResult> PartiallyUpdateBookAsync([FromRoute(Name = "id")] int id, [FromBody] JsonPatchDocument<BookDtoForUpdate> bookPatch)
         {
             if (bookPatch is null)
                 return BadRequest();
