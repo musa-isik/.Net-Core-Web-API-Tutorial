@@ -19,7 +19,7 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureActionFilters(); // action filterlarý ekledik
-
+builder.Services.ConfigureCors(); // CORS ayarlarýný ekledik
 // bu konfigurasonu yaptýðýmýzda apimiz sadece json üzerinden deðil farklý media type'lar üzerinden de içerik alýp gönderebilir.
 builder.Services.AddControllers(config =>
 {
@@ -61,6 +61,7 @@ if (app.Environment.IsProduction())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseCors("CorsPolicy");
 
 app.MapControllers();
 
