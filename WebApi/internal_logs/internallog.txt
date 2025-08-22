@@ -233,3 +233,21 @@
 2025-08-21 17:20:42.8200 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.3.4402. Product version: 6.0.3+e276e1969a52b8ecc5cc84c1670a516efea0cb19. GlobalAssemblyCache: False
 2025-08-21 17:20:42.8200 Info AutoReload Config File Monitor starting
 2025-08-21 17:20:42.8402 Info Configuration initialized.
+2025-08-21 17:38:17.2727 Info AppDomain Shutting down. LogFactory closing...
+2025-08-21 17:38:17.3403 Info AutoReload Config File Monitor stopping, since no active configuration
+2025-08-21 17:38:17.3758 Info LogFactory has been disposed.
+2025-08-21 17:42:03.0650 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2025-08-21 17:42:03.0872 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.3.4402. Product version: 6.0.3+e276e1969a52b8ecc5cc84c1670a516efea0cb19. GlobalAssemblyCache: False
+2025-08-21 17:42:03.0872 Info AutoReload Config File Monitor starting
+2025-08-21 17:42:03.1093 Info Configuration initialized.
+2025-08-22 13:32:54.0292 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2025-08-22 13:32:54.0483 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.3.4402. Product version: 6.0.3+e276e1969a52b8ecc5cc84c1670a516efea0cb19. GlobalAssemblyCache: False
+2025-08-22 13:32:54.0483 Info AutoReload Config File Monitor starting
+2025-08-22 13:32:54.0657 Info Configuration initialized.
+2025-08-22 14:16:12.4647 Info AppDomain Shutting down. LogFactory closing...
+2025-08-22 14:16:12.4891 Info AutoReload Config File Monitor stopping, since no active configuration
+2025-08-22 14:16:12.4974 Info LogFactory has been disposed.
+2025-08-22 14:16:33.6657 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2025-08-22 14:16:33.6868 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.3.4402. Product version: 6.0.3+e276e1969a52b8ecc5cc84c1670a516efea0cb19. GlobalAssemblyCache: False
+2025-08-22 14:16:33.6868 Info AutoReload Config File Monitor starting
+2025-08-22 14:16:33.7114 Info Configuration initialized.
