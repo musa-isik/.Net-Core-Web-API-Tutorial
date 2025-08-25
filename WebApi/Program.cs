@@ -37,7 +37,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
+builder.Services.ConfigureDataShaper(); // data shaper serviceini ekledik
 
 var app = builder.Build();
 
